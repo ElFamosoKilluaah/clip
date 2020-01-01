@@ -32,6 +32,7 @@ fn main() {
                 eprintln!("Please verify that this file is encoded in the UTF-8 format !");
             }).unwrap()).unwrap();
             println!("Content set !");
+            return;
         }
     }
 }
