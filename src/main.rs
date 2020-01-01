@@ -37,10 +37,13 @@ fn main() {
 }
 
 fn path_to_search() -> String {
-    let mut current_exe = String::from(std::env::current_exe().unwrap().to_str().unwrap());
+    let mut to_return = String::from(std::env::current_exe().unwrap().to_str().unwrap());
     let current = env::current_exe().unwrap();
     let to_remove = &current.file_name().unwrap().to_str().unwrap();
-    let index = current_exe.len() - to_remove.len();
+    let index = to_return.len() - to_remove.len();
+    let _ = to_return.split_off(index);
 
-    current_exe.split_off(index)
+    println!("{}", to_return);
+    to_return
+
 }
