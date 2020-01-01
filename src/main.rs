@@ -42,7 +42,7 @@ fn path_to_search() -> String {
     let current = env::current_exe().unwrap();
     let to_remove = &current.file_name().unwrap().to_str().unwrap();
     let index = to_return.len() - to_remove.len();
-    let _ = to_return.split_off(index);
+    to_return.split_off(index);
 
     println!("{}", to_return);
     to_return
