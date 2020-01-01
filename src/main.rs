@@ -4,10 +4,11 @@ use clipboard2::{SystemClipboard, Clipboard};
 use std::fs;
 use std::fs::File;
 use std::io::Read;
+use std::env;
 
 fn main() {
     let clipboard = SystemClipboard::new().unwrap();
-    let files = fs::read_dir("./").unwrap();
+    let files = fs::read_dir(path_to_search()).unwrap();
     let args: Vec<String> = std::env::args().collect();
 
     if args.len() < 2 {
@@ -20,6 +21,7 @@ fn main() {
     for path in files {
         let value = path.unwrap().path();
         let key = String::from(value.clone().to_str().unwrap());
+        println!("Key: {}, arg: {}, contains: {}", &key, &to_get, key.contains(to_get));
 
         if key.contains(to_get) {
             let mut file = File::open(&value).unwrap();
@@ -32,6 +34,13 @@ fn main() {
             println!("Content set !");
         }
     }
+}
 
+fn path_to_search() -> String {
+    let mut current_exe = String::from(std::env::current_exe().unwrap().to_str().unwrap());
+    let current = env::current_exe().unwrap();
+    let to_remove = &current.file_name().unwrap().to_str().unwrap();
+    let index = current_exe.len() - to_remove.len();
 
+    current_exe.split_off(index)
 }
